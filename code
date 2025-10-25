@@ -1,0 +1,83 @@
+class expensive_tracker():
+    def init(self):
+        self.hist = {}
+        self.total_spend = 0
+        self.salary = 0
+        self.dict = {}
+        self.init_salary = 0
+    def main(self):
+        print("-" * 10)
+        print("Welcome to Expensive tracker 📊")
+        print("-" * 10)
+        self.salary = float(input("Enter your salary = "))
+        self.init_salary = self.salary
+        print("-" * 10)
+        c = ["Foods 🍔","fun 😊","home 🏠","Work 🏢"]
+        print("1.to chech your balance\n2.note a expense\n3.history\n4.Exist")
+        print("-" * 10)
+        while True:
+            choice = int(input("Enter your choice = "))
+            print("-" * 10)
+            if choice == 2:
+                for i,j in enumerate(c):
+                    print(i+1,j)
+                while True:
+                    category = int(input("Enter a your category number= "))
+                    if category in [1,2,3,4]:
+                        break
+                    else:
+                        print(f"Please enter the right number in category {"".join(c)}")
+                category_name = input(f"Name of the {c[category-1]}")
+                while True:
+                    category_amount = float(input(f"Enter the amount of category {category_name}"))
+                    if self.salary > category_amount:
+                        self.salary = self.salary - category_amount
+                        self.dict.setdefault(c[category - 1], []).append(category_amount)
+
+                        # ✅ Save item separately
+                        self.save(category_name, category_amount)
+                        self.total_spend += category_amount
+                        print("✅ Expense Added")
+                        print(f"Your current balance = {self.salary}")
+                        print("-" * 10)
+                        break
+                    else:
+                        print("Please enter the right amount")
+                        print("-" * 10)
+                self.save(category_name,category_amount)
+            elif choice == 1:
+                print(f"Your salary{self.init_salary}")
+                print(f"Your balance {self.salary}")
+                print("-" * 10)
+                pass
+            elif choice == 3:
+                self.history()
+            elif choice ==4:
+                print("👋 Exiting... Goodbye!")
+                break
+            else:
+                print(f"Entered invalid choice{choice}")
+                print("Please enter valid again")
+    def save(self,category_name,category_amount):
+        self.hist.update({category_name:category_amount})
+
+    def check(self):
+        print(f"Your balance{self.salary}")
+    def history(self):
+
+        if not self.hist:
+            print("-" * 10)
+            print("No history")
+            print("-" * 10)
+        else :
+            print("📜 Expense History")
+            print("▶ Items:")
+            for i,j in self.hist.items():
+                print(i,":",j)
+            print("▶ Category:")
+            for i,j in self.dict.items():
+                print(i,":",j)
+            print("-"*10)
+if name == "main":
+    n = expensive_tracker()
+    n.main()
